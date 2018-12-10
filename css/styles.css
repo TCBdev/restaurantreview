@@ -1,15 +1,15 @@
 @charset "utf-8";
 /* CSS Document */
 
-body,td,th,p{
+body, td, th, p{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10pt;
-	color: #333;
+	color: #333333;
 	line-height: 1.5;
 }
 
 body {
-	background-color: #fdfdfd;
+	background-color: #FDFDFD;
 	margin: 0;
 	position:relative;
 }
@@ -17,21 +17,21 @@ body {
 ul, li {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10pt;
-	color: #333;
+	color: #333333;
 }
 
 a {
-	color: orange;
+	color: #FFB62F;
 	text-decoration: none;
 }
 
 a:hover, a:focus {
-	color: #3397db;
+	color: #3397DB;
 	text-decoration: none;
 }
 
 a img{
-	border: none 0px #fff;
+	border: none 0px #FFFFFF;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -39,18 +39,22 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 0 20px;
 }
 
+table {
+  table-layout: fixed;
+}
+
 article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 
 #maincontent {
-  background-color: #f3f3f3;
+  background-color: #F3F3F3;
   min-height: 100%;
 }
 
 #footer {
-  background-color: #444;
-  color: #aaa;
+  background-color: #444444;
+  color: #AAAAAA;
   font-size: 8pt;
   letter-spacing: 1px;
   padding: 25px;
@@ -76,7 +80,7 @@ nav h1 {
 }
 
 nav h1 a {
-  color: #ffffff;
+  color: #FFFFFF;
   font-size: 14pt;
   font-weight: 200;
   letter-spacing: 10px;
@@ -87,10 +91,11 @@ nav h1 a {
 #breadcrumb {
     padding: 10px 40px 16px;
     list-style: none;
-    background-color: #eeeeee;
+    background-color: #EEEEEE;
     font-size: 17px;
     margin: 0;
     width: calc(50% - 80px);
+    text-align: center;
 }
 
 /* Display list items side by side */
@@ -99,21 +104,21 @@ nav h1 a {
 }
 
 /* Add a slash symbol (/) before/behind each list item */
-#breadcrumb li+li:before {
+#breadcrumb li + li:before {
     padding: 8px;
-    color: black;
-    content: "/\00a0";
+    color: #000000;
+    content: "/\00a0"; /* HEXIDECIMAL CODE FOR NONBREAKING SPACE */
 }
 
 /* Add a color to all links inside the list */
 #breadcrumb li a {
-    color: #0275d8;
+    color: #0275D8;
     text-decoration: none;
 }
 
 /* Add a color on mouse-over */
 #breadcrumb li a:hover {
-    color: #01447e;
+    color: #01447E;
     text-decoration: underline;
 }
 
@@ -124,7 +129,7 @@ nav h1 a {
 #map {
   height: 400px;
   width: 100%;
-  background-color: #cccccc;
+  background-color: #CCCCCC;
 }
 
 
@@ -154,8 +159,8 @@ nav h1 a {
 }
 
 .filter-options select {
-  background-color: white;
-  border: 1px solid #fff;
+  background-color: #FFFFFF;
+  border: 1px solid #FFFFFF;
   font-family: Arial,sans-serif;
   font-size: 11pt;
   height: 35px;
@@ -170,16 +175,18 @@ nav h1 a {
 
 
 #restaurants-list {
-  background-color: #f3f3f3;
+  background-color: #F3F3F3;
   list-style: outside none none;
   margin: 0;
   padding: 30px 15px 60px;
   text-align: center;
+  /* grid-gap: 20px; 
+  justify-content: center; */
 }
 
 #restaurants-list li {
-  background-color: #fff;
-  border: 2px solid #ccc;
+  background-color: #FFFFFF;
+  border: 2px solid #CCCCCC;
   font-family: Arial,sans-serif;
   margin: 15px;
   min-height: 380px;
@@ -189,7 +196,7 @@ nav h1 a {
 }
 
 #restaurants-list .restaurant-img {
-  background-color: #ccc;
+  background-color: #CCCCCC;
   display: block;
   margin: 0;
   max-width: 100%;
@@ -198,7 +205,7 @@ nav h1 a {
 }
 
 #restaurants-list li h1 {
-  color: #f18200;
+  color: #F18200;
   font-family: Arial,sans-serif;
   font-size: 14pt;
   font-weight: 200;
@@ -214,9 +221,9 @@ nav h1 a {
 }
 
 #restaurants-list li a {
-  background-color: orange;
-  border-bottom: 3px solid #eee;
-  color: #fff;
+  background-color: #FFB62F;
+  border-bottom: 3px solid #EEEEEE;
+  color: #FFFFFF;
   display: inline-block;
   font-size: 10pt;
   margin: 15px 0 0;
@@ -247,7 +254,7 @@ nav h1 a {
 }
 
 .inside #map {
-  background-color: #ccc;
+  background-color: #CCCCCC;
   height: 100%;
   width: 100%;
 }
@@ -259,7 +266,7 @@ nav h1 a {
 }
 
 #restaurant-name {
-  color: #f18200;
+  color: #F18200;
   font-family: Arial,sans-serif;
   font-size: 20pt;
   font-weight: 200;
@@ -275,12 +282,13 @@ nav h1 a {
 
 #restaurant-address {
   font-size: 12pt;
+  color: #666666;
   margin: 10px 0px;
 }
 
 #restaurant-cuisine {
-  background-color: #333;
-  color: #ddd;
+  background-color: #343434;
+  color: #DDDDDD;
   font-size: 12pt;
   font-weight: 300;
   letter-spacing: 10px;
@@ -292,8 +300,8 @@ nav h1 a {
 }
 
 #restaurant-container, #reviews-container {
-  border-bottom: 1px solid #d9d9d9;
-  border-top: 1px solid #fff;
+  border-bottom: 1px solid #D9D9D9;
+  border-top: 1px solid #FFFFFF;
   padding: 140px 40px 30px;
   width: 50%;
 }
@@ -303,7 +311,7 @@ nav h1 a {
 }
 
 #reviews-container h2 {
-  color: #f58500;
+  color: #F58500;
   font-size: 24pt;
   font-weight: 300;
   letter-spacing: -1px;
@@ -316,8 +324,8 @@ nav h1 a {
 }
 
 #reviews-list li {
-  background-color: #fff;
-    border: 2px solid #f3f3f3;
+  background-color: #FFFFFF;
+    border: 2px solid #F3F3F3;
   display: block;
   list-style-type: none;
   margin: 0 0 30px;
@@ -332,5 +340,107 @@ nav h1 a {
 }
 
 #restaurant-hours td {
-  color: #666;
+  background-color: #FFFFFF;
+  border: 2px solid #F3F3F3;
+  overflow: hidden;
+  padding: 20px;
+}
+
+#restaurant-hours td {
+  color: #666666;
+}
+
+.restaurant-fav-icon {
+  width: 50px;
+  height: 50px;
+  margin-top: 10px;
+}
+
+.leaflet-container a {
+  color: #252831;
+}
+
+/* ====================== Media queries ====================== */
+
+/* Breakpoints correspond to those used in the Bootstrap grid system. Note: min and max are inclusive */
+
+/* Mobile phones/extra small screens */
+@media screen and (max-width: 767px) {
+  nav h1 {
+    text-align: center;
+  }
+
+  nav h1 a {
+    /* Makes 1pt smaller */
+    font-size: 13pt;
+  }
+
+  #restaurants-list li {
+    /* For #restaurants-list li there is max-width: 270px set in main CSS; this replacement declaration makes it wider, occuping 90% of the screen width */
+    max-width: 90%;
+  }
+
+  /* Image on restaurant details page. Width set to 50% in main CSS */
+  #restaurant-img {
+    width: 80%;
+  }
+
+  /* Cuisine type label directly below restaurant image. Set to 50% in main CSS */
+  #restaurant-cuisine {
+    width: 80%;
+  }
+}
+
+/* TABLETS & SMALL SCREENS */
+
+@media screen and (min-width: 768px) {
+  #restaurants-list {
+    /* EQUALLY SPACED COLUMNS
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #restaurants-list li {
+    /* For #restaurants-list li there is max-width: 270px set in main CSS; this undoes that, allowing li to occupy more space */
+    max-width: none;
+  }
+
+  /* Image on restaurant details page. Width set to 50% in main CSS */
+  #restaurant-img {
+    width: 70%;
+  }
+
+  /* Cuisine type label directly below restaurant image. Set to 50% in main CSS */
+  #restaurant-cuisine {
+    width: 70%;
+  }
+}
+
+/* Small laptops/medium screens */
+@media screen and (min-width: 992px) {
+  #restaurants-list {
+    /* Splits grid into three equally spaced columns. Three columns of restaurant info cards actually don't appear until width is 974px (not sure why) */
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Image on restaurant details page. Width set to 50% in main CSS */
+  #restaurant-img {
+    width: 60%;
+  }
+
+  /* Cuisine type label directly below restaurant image. Set to 50% in main CSS */
+  #restaurant-cuisine {
+    width: 60%;
+  }
+}
+
+/* Regular and large laptops, desktops/large screens */
+@media screen and (min-width: 1200px) {
+  #restaurants-list {
+    /* Splits grid into three equally spaced columns. Four columns of restaurant info cards actually don't appear until width is 1216px (not sure why) */
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  #reviews-list li {
+    width: 60%;
+  }
 }

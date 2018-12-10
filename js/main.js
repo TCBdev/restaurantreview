@@ -1,6 +1,15 @@
-let restaurants,
-  neighborhoods,
-  cuisines
+"eslint.enable" = false;
+
+// CHECKING FOR SERVICE WORKER SUPPORT
+if ('serviceWorker' in navigator) {
+  // REGISTER SERVICE WORKER. RETURNS PROMISE
+  navigator.serviceWorker.register('../sw.js')
+    .then((reg) => console.log('Registration successful'))
+    // FOR REJECTED CASES
+    .catch(err => console.log(`Registration failed with ${err}`));
+}
+
+let restaurants, neighborhoods, cuisines
 var newMap
 var markers = []
 
@@ -78,7 +87,7 @@ initMap = () => {
         scrollWheelZoom: false
       });
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-    mapboxToken: '<your MAPBOX API KEY HERE>',
+    mapboxToken: 'pk.eyJ1IjoidGNkZXYiLCJhIjoiY2pwaHMwNGFkMHp2eDNwb2JhaDN4Nnh6ZCJ9.AgqzSdr1o93Jr5e2ZGFmnQ',
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
       '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -158,10 +167,17 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
+  //////////////////////////////////////
+
+  let altInfo = restaurant.name + ' restaurant, located in' + restaurant.neighborhood;
+
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.alt = altInfo;
   li.append(image);
+
+  //////////////////////////////////////
 
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;
@@ -177,6 +193,9 @@ createRestaurantHTML = (restaurant) => {
 
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
+  more.tabIndex = '3';
+  more.setAttribute('aria-label', `View details of ${restaurant.name}`)
+  more.setAttribute('role', 'button');
   more.href = DBHelper.urlForRestaurant(restaurant);
   li.append(more)
 
@@ -190,7 +209,7 @@ addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.newMap);
-    marker.on("click", onClick);
+    marker.on('click', onClick);
     function onClick() {
       window.location.href = marker.options.url;
     }
