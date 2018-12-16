@@ -1,10 +1,13 @@
-// CHECKING FOR SERVICE WORKER SUPPORT
+// VERIFYING SERVICE WORKER SUPPORT
+
 if ('serviceWorker' in navigator) {
-  // REGISTER SERVICE WORKER. RETURNS PROMISE
-  navigator.serviceWorker.register('../sw.js')
-    .then((reg) => console.log('Registration successful'))
-    // FOR REJECTED CASES
-    .catch(err => console.log(`Registration failed with ${err}`));
+  console.log('Service Worker: Supported');
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('../sw.js')
+      .then(reg => console.log('Service Worker: Registered'))
+      .catch(err => console.log(`Service Worker: Error: ${err}`))
+  })
 }
 
 let restaurants;
@@ -13,18 +16,15 @@ let cuisines;
 var newMap;
 var markers = [];
 
-/**
- * Fetch neighborhoods and cuisines as soon as the page is loaded.
- */
+// Fetch neighborhoods and cuisines as soon as the page is loaded
 document.addEventListener('DOMContentLoaded', event => {
-  initMap(); // added 
+  initMap(); // Added
   fetchNeighborhoods();
   fetchCuisines();
 });
 
-/**
- * Fetch all neighborhoods and set their HTML.
- */
+// Fetch all neighborhoods and set their HTML
+// Note: Declaring a function variable withouta variable declaration keyword means the variable is declared globally (on the window object)
 fetchNeighborhoods = () => {
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
     if (error) { // Got an error
@@ -36,9 +36,7 @@ fetchNeighborhoods = () => {
   });
 }
 
-/**
- * Set neighborhoods HTML.
- */
+// Set neighborhoods HTML
 fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
   const select = document.getElementById('neighborhoods-select');
   neighborhoods.forEach(neighborhood => {
@@ -49,9 +47,7 @@ fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
   });
 }
 
-/**
- * Fetch all cuisines and set their HTML.
- */
+// Fetch all cuisines and set their HTML
 fetchCuisines = () => {
   DBHelper.fetchCuisines((error, cuisines) => {
     if (error) { // Got an error!
@@ -63,9 +59,7 @@ fetchCuisines = () => {
   });
 }
 
-/**
- * Set cuisines HTML.
- */
+// Set cuisines HTML
 fillCuisinesHTML = (cuisines = self.cuisines) => {
   const select = document.getElementById('cuisines-select');
 
@@ -82,10 +76,10 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
  */
 initMap = () => {
   self.newMap = L.map('map', {
-        center: [40.722216, -73.987501],
-        zoom: 12,
-        scrollWheelZoom: false
-      });
+    center: [40.722216, -73.987501],
+    zoom: 12,
+    scrollWheelZoom: false
+  });
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
     mapboxToken: 'pk.eyJ1IjoidGNkZXYiLCJhIjoiY2pwaHMwNGFkMHp2eDNwb2JhaDN4Nnh6ZCJ9.AgqzSdr1o93Jr5e2ZGFmnQ',
     maxZoom: 18,
@@ -96,7 +90,7 @@ initMap = () => {
   }).addTo(newMap);
 
   updateRestaurants();
-}
+};
 
 /**
  * Update page and map for current restaurants.
@@ -121,10 +115,8 @@ updateRestaurants = () => {
   })
 }
 
-/**
- * Clear current restaurants, their HTML and remove their map markers.
- */
-resetRestaurants = (restaurants) => {
+// Clear current restaurants, their HTML, and remove their map markers
+resetRestaurants = restaurants => {
   // Remove all restaurants
   self.restaurants = [];
   const ul = document.getElementById('restaurants-list');
@@ -138,9 +130,7 @@ resetRestaurants = (restaurants) => {
   self.restaurants = restaurants;
 }
 
-/**
- * Create all restaurants HTML and add them to the webpage.
- */
+// Create all restaurants HTML and add to webpage
 fillRestaurantsHTML = (restaurants = self.restaurants) => {
   const ul = document.getElementById('restaurants-list');
   restaurants.forEach(restaurant => {
@@ -149,14 +139,9 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
   addMarkersToMap();
 }
 
-/**
- * Create restaurant HTML.
- */
-createRestaurantHTML = (restaurant) => {
+// Create restaurant HTML
+createRestaurantHTML = restaurant => {
   const li = document.createElement('li');
-
-  //////////////////////////////////////
-
   let altInfo = restaurant.name + ' restaurant, located in' + restaurant.neighborhood;
 
   const image = document.createElement('img');
@@ -165,9 +150,7 @@ createRestaurantHTML = (restaurant) => {
   image.alt = altInfo;
   li.append(image);
 
-  //////////////////////////////////////
-
-  const name = document.createElement('h1');
+  const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
   li.append(name);
 
@@ -180,27 +163,27 @@ createRestaurantHTML = (restaurant) => {
   li.append(address);
 
   const more = document.createElement('a');
-  more.innerHTML = 'View Details';
+  more.innerHTML = 'View details';
+  // Makes restaurant list details buttons tabbed third, after filter options dropdowns (instead of map markers)
   more.tabIndex = '3';
   more.setAttribute('aria-label', `View details of ${restaurant.name}`)
   more.setAttribute('role', 'button');
   more.href = DBHelper.urlForRestaurant(restaurant);
   li.append(more)
 
-  return li
+  return li;
 }
 
-/**
- * Add markers for current restaurants to the map.
- */
+// Add markers for current restaurants to the map
 addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
-    // Add marker to the map
+    // Add marker to map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.newMap);
     marker.on('click', onClick);
+
     function onClick() {
       window.location.href = marker.options.url;
     }
     self.markers.push(marker);
   });
-} 
+}

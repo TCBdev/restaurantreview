@@ -1,60 +1,57 @@
-@charset "utf-8";
-/* CSS Document */
-
-body, td, th, p{
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 10pt;
-	color: #333333;
-	line-height: 1.5;
+body,
+td,
+th,
+p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  color: #333;
+  line-height: 1.5;
 }
 
 body {
-	background-color: #FDFDFD;
-	margin: 0;
-	position:relative;
+  /* Removes border that appears around sides of screen */
+  margin: 0;
 }
 
-ul, li {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 10pt;
-	color: #333333;
+ul,
+li {
+  font-size: 10pt;
+  color: #333;
 }
 
 a {
-	color: #FFB62F;
-	text-decoration: none;
+  color: orange;
+  text-decoration: none;
 }
 
-a:hover, a:focus {
-	color: #3397DB;
-	text-decoration: none;
+a:hover,
+a:focus {
+  color: #288dd1;
+  text-decoration: none;
 }
 
-a img{
-	border: none 0px #FFFFFF;
+/* TODO: Find out what this applies to */
+a img {
+  /* Shorthand for border-width, border-style, border-color */
+  border: 0 none #fff;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: Arial, Helvetica, sans-serif;
+h1 {
   margin: 0 0 20px;
 }
 
+/* Applies to restaurant hours table, and causes table to render more quickly. Whereas in the default table-layout property value of auto, in which column width is set by widest unbreakable content in cells (content dictating layout), with property value of fixed table and column widths are determined by width of table or col or by width of first row of cells. Column widths are split equally if widths not present in first row */
 table {
   table-layout: fixed;
 }
 
-article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-
 #maincontent {
-  background-color: #F3F3F3;
-  min-height: 100%;
+  background-color: #f3f3f3;
 }
 
 #footer {
-  background-color: #444444;
-  color: #AAAAAA;
+  background-color: #444;
+  color: #dedede;
   font-size: 8pt;
   letter-spacing: 1px;
   padding: 25px;
@@ -62,152 +59,130 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   text-transform: uppercase;
 }
 
-
 /* ====================== Navigation ====================== */
-
 
 nav {
   width: 100%;
   height: 80px;
   background-color: #252831;
   display: flex;
-  text-align:center;
-  align-items: center;
 }
 
 nav h1 {
+  /*  With display-flex instead of default display: block applied to nav, margin: auto applied to h1 descendant of nav causes h1 to be centered */
   margin: auto;
 }
 
+/* Affects title at top of page */
 nav h1 a {
-  color: #FFFFFF;
-  font-size: 14pt;
+  color: #fff;
+  font-size: 15pt;
   font-weight: 200;
+  /* Space between each letter. Adds space after last letter (but not before first) which makes it not look centered. Fix: adding a margin-left equal to the letter spacing */
   letter-spacing: 10px;
+  margin-left: 10px;
   text-transform: uppercase;
-  padding-top: 20%;
+  text-align: center;
 }
 
 #breadcrumb {
-    padding: 10px 40px 16px;
-    list-style: none;
-    background-color: #EEEEEE;
-    font-size: 17px;
-    margin: 0;
-    width: calc(50% - 80px);
-    text-align: center;
+  padding: 10px 40px 16px;
+  list-style: none;
+  background-color: #eee;
+  font-size: 17px;
+  margin: 0;
+  text-align: center;
 }
 
 /* Display list items side by side */
 #breadcrumb li {
-    display: inline;
+  display: inline;
 }
 
-/* Add a slash symbol (/) before/behind each list item */
-#breadcrumb li + li:before {
-    padding: 8px;
-    color: #000000;
-    content: "/\00a0"; /* HEXIDECIMAL CODE FOR NONBREAKING SPACE */
+/* Adds slash symbol before/behind each list item */
+#breadcrumb li+li:before {
+  padding: 8px;
+  color: black;
+  /* Hexadecimal code for nonbreaking space */
+  content: '/\00a0';
 }
 
-/* Add a color to all links inside the list */
+/* Adds color to all links inside list */
 #breadcrumb li a {
-    color: #0275D8;
-    text-decoration: none;
+  color: #252831;
+  text-decoration: none;
 }
 
-/* Add a color on mouse-over */
+/* Add color on mouseover */
 #breadcrumb li a:hover {
-    color: #01447E;
-    text-decoration: underline;
+  color: #01447e;
+  text-decoration: underline;
 }
-
 
 /* ====================== Map ====================== */
 
-
 #map {
   height: 400px;
-  width: 100%;
-  background-color: #CCCCCC;
+  max-width: 100%;
+  background-color: #ccc;
 }
 
-
-/* ====================== Restaurant Filtering ====================== */
-
+/* ====================== Restaurant filtering ====================== */
 
 .filter-options {
+  background-color: #1862c6;
   display: flex;
-  flex-direction: row;
+  /* Centers along primary axis (horizontal in this case since display: flex sets the flex direction to row by default) */
   justify-content: center;
-  width: 100%;
-  height: 50px;
-  background-color: #3397DB;
-  align-items: center;
-}
-
-.filter-options h2 {
-  color: white;
-  font-size: 1rem;
-  font-weight: normal;
-  line-height: 1;
-  margin: 0 20px;
-}
-
-.label {
-  visibility: hidden;
 }
 
 .filter-options select {
-  background-color: #FFFFFF;
-  border: 1px solid #FFFFFF;
-  font-family: Arial,sans-serif;
-  font-size: 11pt;
+  background-color: white;
+  border: 1px solid #fff;
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
   height: 35px;
   letter-spacing: 0;
   margin: 10px;
   padding: 0 10px;
-  width: 200px;
+  max-width: 160px;
 }
 
+/* ====================== Restaurant listing ====================== */
 
-/* ====================== Restaurant Listing ====================== */
-
-
+/* ul element */
 #restaurants-list {
-  background-color: #F3F3F3;
+  background-color: #f3f3f3;
   list-style: outside none none;
   margin: 0;
-  padding: 30px 15px 60px;
-  text-align: center;
-  /* grid-gap: 20px; 
-  justify-content: center; */
+  padding: 30px 15px 30px;
+  display: grid;
+  grid-gap: 20px;
+  /* grid-template-columns: repeat(1, 1fr); */
+  /* This only takes effect at the smallest (max-width: 767) breakpoint because it centers within a grid cell. There are an odd number of items within the ul, and this does not center the two in the last row when there is more than one column. This cannot be accomplished with CSS Grid due to impenetrable column lines/tracks (whereas with Flexbox, an item can be moved around along a row/column without issue) */
+  justify-items: center;
 }
 
 #restaurants-list li {
-  background-color: #FFFFFF;
-  border: 2px solid #CCCCCC;
-  font-family: Arial,sans-serif;
-  margin: 15px;
-  min-height: 380px;
-  padding: 0 30px 25px;
-  text-align: left;
-  width: 270px;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  font-family: Arial, sans-serif;
+  padding: 10px;
+  max-width: 270px;
 }
 
 #restaurants-list .restaurant-img {
-  background-color: #CCCCCC;
-  display: block;
-  margin: 0;
+  background-color: #ccc;
+  /* Ensures image width is not larger than 100% of containing block (the li) */
   max-width: 100%;
-  min-height: 248px;
-  min-width: 100%;
 }
 
-#restaurants-list li h1 {
-  color: #F18200;
-  font-family: Arial,sans-serif;
-  font-size: 14pt;
+/* Heading set in main.js, line 147 */
+#restaurants-list li h2 {
+  /* Matches color used on for restaraunt name and reviews section header on restaurant details page */
+  color: #c7650d;
+  font-family: Arial, sans-serif;
+  font-size: 13pt;
   font-weight: 200;
   letter-spacing: 0;
   line-height: 1.3;
@@ -220,75 +195,48 @@ nav h1 a {
   font-size: 11pt;
 }
 
+/* Applies to "view details" button */
 #restaurants-list li a {
-  background-color: #FFB62F;
-  border-bottom: 3px solid #EEEEEE;
-  color: #FFFFFF;
+  background-color: #252831;
+  border-bottom: 3px solid #eee;
+  color: #fff;
   display: inline-block;
   font-size: 10pt;
   margin: 15px 0 0;
   padding: 8px 30px 10px;
+  bottom: 0;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
 }
 
+/* ====================== Restaurant details ====================== */
 
-/* ====================== Restaurant Details ====================== */
-
-
-.inside header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-.inside #map-container {
-  background: blue none repeat scroll 0 0;
-  height: 87%;
-  position: fixed;
-  right: 0;
-  top: 80px;
-  width: 50%;
-}
-
-.inside #map {
-  background-color: #CCCCCC;
-  height: 100%;
-  width: 100%;
-}
-
-.inside #footer {
-  bottom: 0;
-  position: absolute;
-  width: 50%;
-}
-
+/* Affects h2 restaurant name on restaurant info page, created in restaurant.html */
 #restaurant-name {
-  color: #F18200;
-  font-family: Arial,sans-serif;
-  font-size: 20pt;
-  font-weight: 200;
-  letter-spacing: 0;
-  margin: 15px 0 30px;
+  color: #c7650d;
+  font-size: 19pt;
+  /* 400 is default */
+  font-weight: 300;
+  margin-top: 1px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  line-height: 1.1;
+  text-align: center;
 }
 
 #restaurant-img {
-	width: 90%;
+  width: 50%;
 }
 
 #restaurant-address {
   font-size: 12pt;
-  color: #666666;
+  color: #666;
   margin: 10px 0px;
 }
 
 #restaurant-cuisine {
-  background-color: #343434;
-  color: #DDDDDD;
+  background-color: #333;
+  color: #ddd;
   font-size: 12pt;
   font-weight: 300;
   letter-spacing: 10px;
@@ -296,58 +244,72 @@ nav h1 a {
   padding: 2px 0;
   text-align: center;
   text-transform: uppercase;
-	width: 90%;
-}
-
-#restaurant-container, #reviews-container {
-  border-bottom: 1px solid #D9D9D9;
-  border-top: 1px solid #FFFFFF;
-  padding: 140px 40px 30px;
   width: 50%;
 }
 
-#reviews-container {
-  padding: 30px 40px 80px;
+#restaurant-container,
+#reviews-container,
+.reviews-form {
+  border-bottom: 1px solid #d9d9d9;
+  border-top: 1px solid #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-#reviews-container h2 {
-  color: #F58500;
-  font-size: 24pt;
+/* Reviews section header created on line 104 of restaurant_info.js. Keep as h3 for proper semantics (h3 must follow h2, which is already being used for restaurant title) */
+#reviews-container h3 {
+  color: #c7650d;
+  font-size: 19pt;
+  /* 400 is default */
   font-weight: 300;
-  letter-spacing: -1px;
-  padding-bottom: 1pt;
+  letter-spacing: 1.5px;
+  margin: 7px 0 7px 0;
+  text-transform: uppercase;
 }
 
 #reviews-list {
-  margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  margin-bottom: 0;
 }
 
 #reviews-list li {
-  background-color: #FFFFFF;
-    border: 2px solid #F3F3F3;
-  display: block;
-  list-style-type: none;
-  margin: 0 0 30px;
+  background-color: #fff;
+  border: 2px solid #f3f3f3;
+  margin: 0 0 20px;
   overflow: hidden;
-  padding: 0 20px 20px;
-  position: relative;
-  width: 85%;
+  padding: 35px;
+  width: 80%;
+}
+
+/* Targets last item in containing element. Selects last li item */
+#reviews-list li:last-child {
+  margin-bottom: 0;
 }
 
 #reviews-list li p {
   margin: 0 0 10px;
+  word-wrap: break-word;
 }
 
-#restaurant-hours td {
-  background-color: #FFFFFF;
-  border: 2px solid #F3F3F3;
+#restaurant-hours {
+  background-color: #fff;
+  border: 2px solid #f3f3f3;
   overflow: hidden;
   padding: 20px;
 }
 
 #restaurant-hours td {
-  color: #666666;
+  color: #666;
+}
+
+.restaurant-icon {
+  display: flex;
 }
 
 .restaurant-fav-icon {
@@ -391,11 +353,11 @@ nav h1 a {
   }
 }
 
-/* TABLETS & SMALL SCREENS */
-
+/* Tablets/small screens */
 @media screen and (min-width: 768px) {
   #restaurants-list {
-    /* EQUALLY SPACED COLUMNS
+    /* Splits grid into two equally spaced columns. Note: A grid track is the space between any two lines on the grid. The flex unit fr is a length unit used to create flexible grid tracks and represents a fraction of the available space in the container. This is the same effect as grid-template-columns: 1fr 1 fr
+    See https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout#Track_listings_with_repeat()_notation */
     grid-template-columns: repeat(2, 1fr);
   }
 
