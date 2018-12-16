@@ -6,7 +6,7 @@ class DBHelper {
   static get DATABASE_URL() {
     const port = 8000 // Change this to your server port
     //  Changed to this URL from http://localhost:${port}/data/restaurants.json in order to deploy with gh-pages
-    return './data/restaurants.json';
+    return `http: //localhost:${port}/data/restaurants.json`;
   }
 
   // Fetch all restaurants
