@@ -112,13 +112,11 @@ updateRestaurants = () => {
       resetRestaurants(restaurants);
       fillRestaurantsHTML();
     }
-  });
-};
+  })
+}
 
-/**
- * Clear current restaurants, their HTML and remove their map markers.
- */
-resetRestaurants = (restaurants) => {
+// Clear current restaurants, their HTML, and remove their map markers
+resetRestaurants = restaurants => {
   // Remove all restaurants
   self.restaurants = [];
   const ul = document.getElementById('restaurants-list');
@@ -130,27 +128,20 @@ resetRestaurants = (restaurants) => {
   }
   self.markers = [];
   self.restaurants = restaurants;
-};
+}
 
-/**
- * Create all restaurants HTML and add them to the webpage.
- */
+// Create all restaurants HTML and add to webpage
 fillRestaurantsHTML = (restaurants = self.restaurants) => {
   const ul = document.getElementById('restaurants-list');
   restaurants.forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
   });
   addMarkersToMap();
-};
+}
 
-/**
- * Create restaurant HTML.
- */
-createRestaurantHTML = (restaurant) => {
+// Create restaurant HTML
+createRestaurantHTML = restaurant => {
   const li = document.createElement('li');
-
-  //////////////////////////////////////
-
   let altInfo = restaurant.name + ' restaurant, located in' + restaurant.neighborhood;
 
   const image = document.createElement('img');
@@ -159,9 +150,7 @@ createRestaurantHTML = (restaurant) => {
   image.alt = altInfo;
   li.append(image);
 
-  //////////////////////////////////////
-
-  const name = document.createElement('h1');
+  const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
   li.append(name);
 
@@ -174,28 +163,26 @@ createRestaurantHTML = (restaurant) => {
   li.append(address);
 
   const more = document.createElement('a');
-  more.innerHTML = 'View Details';
-  //more.tabIndex = '3';
-  // more.setAttribute('aria-label', `View details of ${restaurant.name}`);
-  // more.setAttribute('role', 'button');
+  more.innerHTML = 'View details';
+  // Makes restaurant list details buttons tabbed third, after filter options dropdowns (instead of map markers)
+  more.tabIndex = '3';
+  more.setAttribute('aria-label', `View details of ${restaurant.name}`)
+  more.setAttribute('role', 'button');
   more.href = DBHelper.urlForRestaurant(restaurant);
-  li.append(more);
+  li.append(more)
 
   return li;
-};
+}
 
-/**
- * Add markers for current restaurants to the map.
- */
+// Add markers for current restaurants to the map
 addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
-    // Add marker to the map
+    // Add marker to map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.newMap);
     marker.on('click', onClick);
-
     function onClick() {
       window.location.href = marker.options.url;
     }
     self.markers.push(marker);
   });
-};
+}

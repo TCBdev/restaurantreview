@@ -1,29 +1,25 @@
-/**
- * Common database helper functions.
- */
-
+// Common database helper functions
 class DBHelper {
-  /**
-   * Database URL.
-   * Change this to restaurants.json file location on your server.
-   */
+
+  // Database URL. Change this to restaurants.json file location on your server.
+  // Note: Static methods are used to implement functions that belong to the class, but not to any particular object of it. They are not assigned to a class's (function's) prototype. Rather than being called on instances of the class, they are called on the class itself
   static get DATABASE_URL() {
-    const port = 5500; // Change this to your server port
-    return `http://localhost:${port}/data/restaurants.json`;
+    const port = 8000 // Change this to your server port
+    //  Changed to this URL from http://localhost:${port}/data/restaurants.json in order to deploy with gh-pages
+    return './data/restaurants.json';
   }
 
-  /**
-   * Fetch all restaurants.
-   */
+  // Fetch all restaurants
   static fetchRestaurants(callback) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', DBHelper.DATABASE_URL);
+    // Function called when an XMLHttpRequest transaction completes successfully
     xhr.onload = () => {
       if (xhr.status === 200) { // Got a success response from server!
         const json = JSON.parse(xhr.responseText);
         const restaurants = json.restaurants;
         callback(null, restaurants);
-      } else { // Oops!. Got an error from server.
+      } else { // Oops! Got an error from server
         const error = (`Request failed. Returned status of ${xhr.status}`);
         callback(error, null);
       }
@@ -31,11 +27,9 @@ class DBHelper {
     xhr.send();
   }
 
-  /**
-   * Fetch a restaurant by its ID.
-   */
+  // Fetch a restaurant by its ID
   static fetchRestaurantById(id, callback) {
-    // fetch all restaurants with proper error handling.
+    // Fetch all restaurants with proper error handling
     DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
         callback(error, null);
@@ -43,18 +37,16 @@ class DBHelper {
         const restaurant = restaurants.find(r => r.id == id);
         if (restaurant) { // Got the restaurant
           callback(null, restaurant);
-        } else { // Restaurant does not exist in the database
+        } else { // Restaurant does not exist in database
           callback('Restaurant does not exist', null);
         }
       }
     });
   }
 
-  /**
-   * Fetch restaurants by a cuisine type with proper error handling.
-   */
+  // Fetch restaurants by a cuisine type with proper error handling
   static fetchRestaurantByCuisine(cuisine, callback) {
-    // Fetch all restaurants  with proper error handling
+    // Fetch all restaurants with proper error handling
     DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
         callback(error, null);
@@ -66,9 +58,7 @@ class DBHelper {
     });
   }
 
-  /**
-   * Fetch restaurants by a neighborhood with proper error handling.
-   */
+  // Fetch restaurants by a neighborhood with proper error handling
   static fetchRestaurantByNeighborhood(neighborhood, callback) {
     // Fetch all restaurants
     DBHelper.fetchRestaurants((error, restaurants) => {
@@ -82,16 +72,14 @@ class DBHelper {
     });
   }
 
-  /**
-   * Fetch restaurants by a cuisine and a neighborhood with proper error handling.
-   */
+  // Fetch restaurants by a cuisine and a neighborhood with proper error handling
   static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, callback) {
     // Fetch all restaurants
     DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
         callback(error, null);
       } else {
-        let results = restaurants;
+        let results = restaurants
         if (cuisine != 'all') { // filter by cuisine
           results = results.filter(r => r.cuisine_type == cuisine);
         }
@@ -103,9 +91,7 @@ class DBHelper {
     });
   }
 
-  /**
-   * Fetch all neighborhoods with proper error handling.
-   */
+  // Fetch all neighborhoods with proper error handling
   static fetchNeighborhoods(callback) {
     // Fetch all restaurants
     DBHelper.fetchRestaurants((error, restaurants) => {
@@ -113,17 +99,15 @@ class DBHelper {
         callback(error, null);
       } else {
         // Get all neighborhoods from all restaurants
-        const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood);
+        const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood)
         // Remove duplicates from neighborhoods
-        const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i);
+        const uniqueNeighborhoods = neighborhoods.filter((v, i) => neighborhoods.indexOf(v) == i)
         callback(null, uniqueNeighborhoods);
       }
     });
   }
 
-  /**
-   * Fetch all cuisines with proper error handling.
-   */
+  // Fetch all cuisines with proper error handling
   static fetchCuisines(callback) {
     // Fetch all restaurants
     DBHelper.fetchRestaurants((error, restaurants) => {
@@ -131,38 +115,32 @@ class DBHelper {
         callback(error, null);
       } else {
         // Get all cuisines from all restaurants
-        const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type);
+        const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type)
         // Remove duplicates from cuisines
-        const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i);
+        const uniqueCuisines = cuisines.filter((v, i) => cuisines.indexOf(v) == i)
         callback(null, uniqueCuisines);
       }
     });
   }
 
-  /**
-   * Restaurant page URL.
-   */
+  // Restaurant page URL
   static urlForRestaurant(restaurant) {
     return (`./restaurant.html?id=${restaurant.id}`);
   }
 
-  /**
-   * Restaurant image URL.
-   */
+  // Restaurant image URL
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}`);
+    return (`./img/${restaurant.photograph}`);
   }
 
-  /**
-   * Map marker for a restaurant.
-   */
+  // Map marker for a restaurant
   static mapMarkerForRestaurant(restaurant, map) {
-    // https://leafletjs.com/reference-1.3.0.html#marker  
+    // https://leafletjs.com/reference-1.3.0.html#marker
     const marker = new L.marker([restaurant.latlng.lat, restaurant.latlng.lng], {
       title: restaurant.name,
       alt: restaurant.name,
       url: DBHelper.urlForRestaurant(restaurant)
-    });
+    })
     marker.addTo(newMap);
     return marker;
   }
