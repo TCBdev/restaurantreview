@@ -1,3 +1,8 @@
+body {
+  /* REMOVE DEFAULT MARGIN */
+  margin: 0;
+}
+
 body,
 td,
 th,
@@ -8,13 +13,7 @@ p {
   line-height: 1.5;
 }
 
-body {
-  /* Removes border that appears around sides of screen */
-  margin: 0;
-}
-
-ul,
-li {
+ul, li {
   font-size: 10pt;
   color: #333;
 }
@@ -24,15 +23,13 @@ a {
   text-decoration: none;
 }
 
-a:hover,
-a:focus {
+a:hover, a:focus {
   color: #288dd1;
   text-decoration: none;
 }
 
-/* TODO: Find out what this applies to */
+/* WIDTH | STYLE | COLOR */
 a img {
-  /* Shorthand for border-width, border-style, border-color */
   border: 0 none #fff;
 }
 
@@ -40,7 +37,7 @@ h1 {
   margin: 0 0 20px;
 }
 
-/* Applies to restaurant hours table, and causes table to render more quickly. Whereas in the default table-layout property value of auto, in which column width is set by widest unbreakable content in cells (content dictating layout), with property value of fixed table and column widths are determined by width of table or col or by width of first row of cells. Column widths are split equally if widths not present in first row */
+/* FOR RESTAURANT HOURS */
 table {
   table-layout: fixed;
 }
@@ -59,7 +56,7 @@ table {
   text-transform: uppercase;
 }
 
-/* ====================== Navigation ====================== */
+/************************ NAVBAR ************************/
 
 nav {
   width: 100%;
@@ -69,16 +66,13 @@ nav {
 }
 
 nav h1 {
-  /*  With display-flex instead of default display: block applied to nav, margin: auto applied to h1 descendant of nav causes h1 to be centered */
   margin: auto;
 }
 
-/* Affects title at top of page */
 nav h1 a {
   color: #fff;
   font-size: 15pt;
   font-weight: 200;
-  /* Space between each letter. Adds space after last letter (but not before first) which makes it not look centered. Fix: adding a margin-left equal to the letter spacing */
   letter-spacing: 10px;
   margin-left: 10px;
   text-transform: uppercase;
@@ -94,32 +88,28 @@ nav h1 a {
   text-align: center;
 }
 
-/* Display list items side by side */
 #breadcrumb li {
   display: inline;
 }
 
-/* Adds slash symbol before/behind each list item */
 #breadcrumb li+li:before {
   padding: 8px;
   color: black;
   /* Hexadecimal code for nonbreaking space */
-  content: '/\00a0';
+  content: '&gt;';
 }
 
-/* Adds color to all links inside list */
 #breadcrumb li a {
   color: #252831;
   text-decoration: none;
 }
 
-/* Add color on mouseover */
 #breadcrumb li a:hover {
   color: #01447e;
   text-decoration: underline;
 }
 
-/* ====================== Map ====================== */
+/************************ MAP ************************/
 
 #map {
   height: 400px;
@@ -127,12 +117,11 @@ nav h1 a {
   background-color: #ccc;
 }
 
-/* ====================== Restaurant filtering ====================== */
+/************************ RESTAURANT FILTERING ************************/
 
 .filter-options {
   background-color: #1862c6;
   display: flex;
-  /* Centers along primary axis (horizontal in this case since display: flex sets the flex direction to row by default) */
   justify-content: center;
 }
 
@@ -148,9 +137,8 @@ nav h1 a {
   max-width: 160px;
 }
 
-/* ====================== Restaurant listing ====================== */
+/************************ RESTAURANT LISTINGS ************************/
 
-/* ul element */
 #restaurants-list {
   background-color: #f3f3f3;
   list-style: outside none none;
@@ -158,8 +146,6 @@ nav h1 a {
   padding: 30px 15px 30px;
   display: grid;
   grid-gap: 20px;
-  /* grid-template-columns: repeat(1, 1fr); */
-  /* This only takes effect at the smallest (max-width: 767) breakpoint because it centers within a grid cell. There are an odd number of items within the ul, and this does not center the two in the last row when there is more than one column. This cannot be accomplished with CSS Grid due to impenetrable column lines/tracks (whereas with Flexbox, an item can be moved around along a row/column without issue) */
   justify-items: center;
 }
 
@@ -173,13 +159,10 @@ nav h1 a {
 
 #restaurants-list .restaurant-img {
   background-color: #ccc;
-  /* Ensures image width is not larger than 100% of containing block (the li) */
   max-width: 100%;
 }
 
-/* Heading set in main.js, line 147 */
 #restaurants-list li h2 {
-  /* Matches color used on for restaraunt name and reviews section header on restaurant details page */
   color: #c7650d;
   font-family: Arial, sans-serif;
   font-size: 13pt;
@@ -210,13 +193,11 @@ nav h1 a {
   text-transform: uppercase;
 }
 
-/* ====================== Restaurant details ====================== */
+/************************ RESTAURANT INFORMATION ************************/
 
-/* Affects h2 restaurant name on restaurant info page, created in restaurant.html */
 #restaurant-name {
   color: #c7650d;
   font-size: 19pt;
-  /* 400 is default */
   font-weight: 300;
   margin-top: 1px;
   letter-spacing: 1.5px;
@@ -258,11 +239,9 @@ nav h1 a {
   align-items: center;
 }
 
-/* Reviews section header created on line 104 of restaurant_info.js. Keep as h3 for proper semantics (h3 must follow h2, which is already being used for restaurant title) */
 #reviews-container h3 {
   color: #c7650d;
   font-size: 19pt;
-  /* 400 is default */
   font-weight: 300;
   letter-spacing: 1.5px;
   margin: 7px 0 7px 0;
@@ -287,7 +266,6 @@ nav h1 a {
   width: 80%;
 }
 
-/* Targets last item in containing element. Selects last li item */
 #reviews-list li:last-child {
   margin-bottom: 0;
 }
@@ -322,87 +300,101 @@ nav h1 a {
   color: #252831;
 }
 
-/* ====================== Media queries ====================== */
+/************************ MEDIA QUERIES ************************/
 
-/* Breakpoints correspond to those used in the Bootstrap grid system. Note: min and max are inclusive */
+/* 
+  -------------
+  LARGE SCREENS 
+  -------------
+*/
 
-/* Mobile phones/extra small screens */
-@media screen and (max-width: 767px) {
+@media screen and (min-width: 1200px) {
+  /* SPLIT IN TO FOUR COLUMNS */
+  #restaurants-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* RESET IMAGE SIZE */
+  #reviews-list li {
+    width: 60%;
+  }
+}
+
+/* 
+  --------------
+  MEDIUM SCREENS 
+  --------------
+*/
+
+@media screen and (min-width: 995px) {
+  #restaurants-list {
+    /* SPLIT IN TO THREE COLUMNS */
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* RESET IMAGE SIZE */
+  #restaurant-img {
+    width: 60%;
+  }
+
+  #restaurant-cuisine {
+    width: 60%;
+  }
+}
+
+/* 
+  ----------------------
+  MEDIUM SCREENS/TABLETS 
+  ----------------------
+*/
+
+@media screen and (min-width: 720px) {
+  #restaurants-list {
+    /* SPLIT IN TO TWO COLUMNS */
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ALLOW FOR MORE SPACE IN *LI*. OVERRIDE THE DEFAULT SETTINGS */
+  #restaurants-list li {
+    max-width: none;
+  }
+
+  /* RESET IMAGE SIZE */
+  #restaurant-img {
+    width: 70%;
+  }
+
+  #restaurant-cuisine {
+    width: 70%;
+  }
+}
+
+/* 
+  ---------------------------
+  SMALL SCREENS/MOBILE PHONES 
+  ---------------------------
+*/
+
+@media screen and (max-width: 719px) {
   nav h1 {
     text-align: center;
   }
 
   nav h1 a {
-    /* Makes 1pt smaller */
     font-size: 13pt;
   }
 
+  /* ALLOW FOR MORE SPACE IN *LI*. OVERRIDE THE DEFAULT SETTINGS */
   #restaurants-list li {
-    /* For #restaurants-list li there is max-width: 270px set in main CSS; this replacement declaration makes it wider, occuping 90% of the screen width */
     max-width: 90%;
   }
 
-  /* Image on restaurant details page. Width set to 50% in main CSS */
+  /* RESET IMAGE SIZE */
   #restaurant-img {
     width: 80%;
   }
 
-  /* Cuisine type label directly below restaurant image. Set to 50% in main CSS */
   #restaurant-cuisine {
     width: 80%;
-  }
-}
-
-/* Tablets/small screens */
-@media screen and (min-width: 768px) {
-  #restaurants-list {
-    /* Splits grid into two equally spaced columns. Note: A grid track is the space between any two lines on the grid. The flex unit fr is a length unit used to create flexible grid tracks and represents a fraction of the available space in the container. This is the same effect as grid-template-columns: 1fr 1 fr
-    See https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout#Track_listings_with_repeat()_notation */
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  #restaurants-list li {
-    /* For #restaurants-list li there is max-width: 270px set in main CSS; this undoes that, allowing li to occupy more space */
-    max-width: none;
-  }
-
-  /* Image on restaurant details page. Width set to 50% in main CSS */
-  #restaurant-img {
-    width: 70%;
-  }
-
-  /* Cuisine type label directly below restaurant image. Set to 50% in main CSS */
-  #restaurant-cuisine {
-    width: 70%;
-  }
-}
-
-/* Small laptops/medium screens */
-@media screen and (min-width: 992px) {
-  #restaurants-list {
-    /* Splits grid into three equally spaced columns. Three columns of restaurant info cards actually don't appear until width is 974px (not sure why) */
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  /* Image on restaurant details page. Width set to 50% in main CSS */
-  #restaurant-img {
-    width: 60%;
-  }
-
-  /* Cuisine type label directly below restaurant image. Set to 50% in main CSS */
-  #restaurant-cuisine {
-    width: 60%;
-  }
-}
-
-/* Regular and large laptops, desktops/large screens */
-@media screen and (min-width: 1200px) {
-  #restaurants-list {
-    /* Splits grid into three equally spaced columns. Four columns of restaurant info cards actually don't appear until width is 1216px (not sure why) */
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  #reviews-list li {
-    width: 60%;
   }
 }
