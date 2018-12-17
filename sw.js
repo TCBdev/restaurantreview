@@ -1,9 +1,6 @@
-// Service worker script (service worker is registered in js/main.js). Using to cache resources on service worker install. Service worker intercepts network requests. This script mainly listens for events
+// SERVICE WORKER SCRIPT REGISTERED IN JS/MAIN.JS. SERVICE WORKER INTERCEPTS NETWORK REQUESTS. 
 
-// Not placing this file in js folder because for security reasons, a service worker can only control the pages that are in its same directory or its subdirectories (must cache assets outside of js folder)
-
-// Must work with service worker to pick up changes to CSS, etc., by changing service worker so browser treats updated service worker as new version, which gets its own install event in which it fetches assets (including updated ones) and places them in a new cache, which isn't automatic (have to change name of cache). Create new cache as not to disrupt one already being used by old service worker and pages it controls. Delete old cache once old service worker is released
-const cacheName = 'restaurant-reviews-app-cache-v2';
+const cacheName = 'restaurant-reviews-app-cache-v3';
 
 const cacheAssets = [
   '/',
@@ -26,12 +23,14 @@ const cacheAssets = [
   '/js/restaurant_info.js',
 ];
 
-// INSTALL EVENT
+/************************************
+            INSTALL EVENT
+************************************/
 
 self.addEventListener('install', event => {
   console.log('Service Worker: Installed');
   event.waitUntil(
-    caches
+    caches // CACHE RESOURCES
     .open(cacheName)
     .then(cache => {
       console.log('Service Worker: Caching Files');
@@ -41,7 +40,9 @@ self.addEventListener('install', event => {
   );
 });
 
-// ACTIVATE EVENT
+/************************************
+            ACTIVATE EVENT
+************************************/
 
 self.addEventListener('activate', event => {
   console.log('Service Worker: Activated');
@@ -60,7 +61,9 @@ self.addEventListener('activate', event => {
   );
 });
 
-// FETCH EVENT
+/************************************
+              FETCH EVENT
+************************************/
 
 self.addEventListener('fetch', event => {
   console.log('Sevice Worker: Fetching');

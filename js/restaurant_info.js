@@ -1,17 +1,25 @@
 let restaurant;
 var newMap;
 
-// Initialize map as soon as the page is loaded
+
+/************************************
+    INITIALIZE MAP ON PAGE LOAD
+************************************/
+
+
 document.addEventListener('DOMContentLoaded', event => {
   initMap();
 });
 
-/**
- * Initialize leaflet map
- */
+
+/************************************
+             LEAFLET MAP
+************************************/
+
+
 initMap = () => {
   fetchRestaurantFromURL((error, restaurant) => {
-    if (error) { // Got an error!
+    if (error) { // GOT AN ERROR
       console.error(error);
     } else {
       self.newMap = L.map('map', {
@@ -33,14 +41,19 @@ initMap = () => {
   });
 };
 
-// Get current restaurant from page URL
+
+/************************************
+  RETREIVE RESTAURANT FROM PAGE URL
+************************************/
+
+
 fetchRestaurantFromURL = callback => {
-  if (self.restaurant) { // restaurant already fetched!
+  if (self.restaurant) { // RESTAURANT FETCHED
     callback(null, self.restaurant)
     return;
   }
   const id = getParameterByName('id');
-  if (!id) { // no id found in URL
+  if (!id) { 
     error = 'No restaurant id in URL'
     callback(error, null);
   } else {
@@ -56,7 +69,12 @@ fetchRestaurantFromURL = callback => {
   }
 }
 
-// Create restaurant HTML and add it to webpage
+
+/************************************
+    CREATE AND ADD RESTAURANT HTML
+************************************/
+
+
 fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
@@ -73,18 +91,22 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
 
-  // Fill operating hours
+  // RESTAURANT HOURS
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
-  // Fill reviews
+  // RESTAURANT REVIEW
   fillReviewsHTML();
 }
 
-// Create restaurant operating hours HTML table and add to webpage
+
+/************************************
+   CREATE AND ADD RESTAURANT HOURS
+************************************/
+
+
 fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
   const hours = document.getElementById('restaurant-hours');
-  // A for-in statement creates a loop that iterates over all non-Symbol, enumerable properties of an object, sometimes in an arbitrary order
   for (let key in operatingHours) {
     const row = document.createElement('tr');
 
@@ -100,7 +122,12 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
   }
 }
 
-// Create all reviews HTML and add to webpage
+
+/************************************
+        CREATE AND ADD REVIEWS
+************************************/
+
+
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
@@ -120,7 +147,12 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   container.appendChild(ul);
 }
 
-// Create review HTML and add it to webpage
+
+/************************************
+        CREATE AND ADD REVIEWS
+************************************/
+
+
 createReviewHTML = review => {
   const li = document.createElement('li');
   const name = document.createElement('p');
@@ -129,6 +161,26 @@ createReviewHTML = review => {
 
   const date = document.createElement('p');
   date.innerHTML = review.date;
+  /*function todaysDate() {
+    var d = new Date();
+    var weekday = new Array(7);
+    weekday[0] = "Sunday";
+    weekday[1] = "Monday";
+    weekday[2] = "Tuesday";
+    weekday[3] = "Wednesday";
+    weekday[4] = "Thursday";
+    weekday[5] = "Friday";
+    weekday[6] = "Saturday";
+    var n = weekday[d.getDay()];
+    document.getElementById("demo").innerHTML = n;
+  }
+  $(document).ready(function () {
+    $("#restaurant-hours td:nth-child(3)").each(function () {
+      if (todaysDate == date) {
+        $(this).parent("tr").css("background-color", "red");
+      }
+    });
+  });*/
   li.appendChild(date);
 
   const rating = document.createElement('p');
@@ -138,13 +190,17 @@ createReviewHTML = review => {
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
   li.appendChild(comments);
-  // Setting tabindex ARIA attribute to 0 allows elements besides links and form elements to receive keyboard focus
   li.setAttribute('tabindex', '0');
 
   return li;
 }
 
-// Add restaurant name to breadcrumb navigation menu
+
+/************************************
+            ADD BREADCRUMB
+************************************/
+
+
 fillBreadcrumb = (restaurant = self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
@@ -152,7 +208,12 @@ fillBreadcrumb = (restaurant = self.restaurant) => {
   breadcrumb.appendChild(li);
 }
 
-// Get a parameter by name from page URL
+
+/************************************
+ GET PARAMETER BY NAME FROM PAGE URL
+************************************/
+
+
 getParameterByName = (name, url) => {
   if (!url)
     url = window.location.href;

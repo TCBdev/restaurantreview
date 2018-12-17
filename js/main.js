@@ -1,4 +1,8 @@
-// VERIFYING SERVICE WORKER SUPPORT
+
+/************************************
+   VERIFYING SERVICE WORKER SUPPORT
+************************************/
+
 
 if ('serviceWorker' in navigator) {
   console.log('Service Worker: Supported');
@@ -16,15 +20,25 @@ let cuisines;
 var newMap;
 var markers = [];
 
-// Fetch neighborhoods and cuisines as soon as the page is loaded
+
+/************************************
+GET NEIGHBORHOODS & CUISINES ON LOAD
+************************************/
+
+
 document.addEventListener('DOMContentLoaded', event => {
   initMap(); // Added
   fetchNeighborhoods();
   fetchCuisines();
 });
 
-// Fetch all neighborhoods and set their HTML
-// Note: Declaring a function variable withouta variable declaration keyword means the variable is declared globally (on the window object)
+
+/************************************
+  FETCH NEIGHBORHOODS AND SET HTML
+************************************/
+
+
+// GLOBALLY DECLARED VARIABLE
 fetchNeighborhoods = () => {
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
     if (error) { // Got an error
@@ -36,7 +50,12 @@ fetchNeighborhoods = () => {
   });
 }
 
-// Set neighborhoods HTML
+
+/************************************
+        SET NEIGHBORHOOD HTML
+************************************/
+
+
 fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
   const select = document.getElementById('neighborhoods-select');
   neighborhoods.forEach(neighborhood => {
@@ -47,10 +66,15 @@ fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
   });
 }
 
-// Fetch all cuisines and set their HTML
+
+/************************************
+      FETCH CUISINE AND SET HTML
+************************************/
+
+
 fetchCuisines = () => {
   DBHelper.fetchCuisines((error, cuisines) => {
-    if (error) { // Got an error!
+    if (error) { // GOT AN ERROR
       console.error(error);
     } else {
       self.cuisines = cuisines;
@@ -59,7 +83,12 @@ fetchCuisines = () => {
   });
 }
 
-// Set cuisines HTML
+
+/************************************
+            CUISINE HTML
+************************************/
+
+
 fillCuisinesHTML = (cuisines = self.cuisines) => {
   const select = document.getElementById('cuisines-select');
 
@@ -71,9 +100,12 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
   });
 }
 
-/**
- * Initialize leaflet map, called from HTML.
- */
+
+/************************************
+            LEAFLET MAP
+************************************/
+
+
 initMap = () => {
   self.newMap = L.map('map', {
     center: [40.722216, -73.987501],
@@ -92,9 +124,12 @@ initMap = () => {
   updateRestaurants();
 };
 
-/**
- * Update page and map for current restaurants.
- */
+
+/************************************
+  UPDATE PAGE & MAP FOR RESTAURANTS
+************************************/
+
+
 updateRestaurants = () => {
   const cSelect = document.getElementById('cuisines-select');
   const nSelect = document.getElementById('neighborhoods-select');
@@ -106,7 +141,7 @@ updateRestaurants = () => {
   const neighborhood = nSelect[nIndex].value;
 
   DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
-    if (error) { // Got an error!
+    if (error) { // GOT AN ERROR
       console.error(error);
     } else {
       resetRestaurants(restaurants);
@@ -115,14 +150,19 @@ updateRestaurants = () => {
   })
 }
 
-// Clear current restaurants, their HTML, and remove their map markers
+
+/************************************
+CLEAR RESTAURANTS, HTML, & MAP MARKERS
+************************************/
+
+
 resetRestaurants = restaurants => {
-  // Remove all restaurants
+  // REMOVE RESTAURANTS
   self.restaurants = [];
   const ul = document.getElementById('restaurants-list');
   ul.innerHTML = '';
 
-  // Remove all map markers
+  // REMOVE MAP MARKERS
   if (self.markers) {
     self.markers.forEach(marker => marker.remove());
   }
@@ -130,7 +170,12 @@ resetRestaurants = restaurants => {
   self.restaurants = restaurants;
 }
 
-// Create all restaurants HTML and add to webpage
+
+/************************************
+    CREATE AND ADD RESTAURANT HTML
+************************************/
+
+
 fillRestaurantsHTML = (restaurants = self.restaurants) => {
   const ul = document.getElementById('restaurants-list');
   restaurants.forEach(restaurant => {
@@ -139,45 +184,63 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
   addMarkersToMap();
 }
 
-// Create restaurant HTML
+
+/************************************
+     CREATE RESTAURANT INFO CARD
+************************************/
+
+
 createRestaurantHTML = restaurant => {
+  // MAKE ENTIRE RESTAURANT INFO CARD REFER TO RESTAURANT PAGE
+  const aTag = document.createElement('a');
+  aTag.href = DBHelper.urlForRestaurant(restaurant);
   const li = document.createElement('li');
+  aTag.tabIndex = '3';
+  aTag.appendChild(li);
   let altInfo = restaurant.name + ' restaurant, located in' + restaurant.neighborhood;
 
+  // ADD IMAGE TO INFO CARD
   const image = document.createElement('img');
   image.className = 'restaurant-img';
+  image.href = DBHelper.urlForRestaurant(restaurant);
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.alt = altInfo;
-  li.append(image);
+  aTag.append(image);
 
-  const name = document.createElement('h2');
+  // ADD RESTAURANT NAME TO INFO CARD
+  const name = document.createElement('h3');
   name.innerHTML = restaurant.name;
-  li.append(name);
+  aTag.append(name);
 
+  // ADD NEIGHBORHOOD TO INFO CARD
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
-  li.append(neighborhood);
+  aTag.append(neighborhood);
 
+  // ADD RESTAURANT ADDRESS TO INFO CARD
   const address = document.createElement('p');
   address.innerHTML = restaurant.address;
-  li.append(address);
+  aTag.append(address);
 
-  const more = document.createElement('a');
-  more.innerHTML = 'View details';
-  // Makes restaurant list details buttons tabbed third, after filter options dropdowns (instead of map markers)
-  more.tabIndex = '3';
-  more.setAttribute('aria-label', `View details of ${restaurant.name}`)
-  more.setAttribute('role', 'button');
-  more.href = DBHelper.urlForRestaurant(restaurant);
-  li.append(more)
+  // ADD VIEW DETAILS BUTTON TO INFO CARD
+  const info = document.createElement('button');
+  info.innerHTML = 'View details';
+  // info.setAttribute('aria-label', `View details of ${restaurant.name}`)
+  // info.setAttribute('role', 'button');
+  info.href = DBHelper.urlForRestaurant(restaurant);
+  aTag.append(info)
 
-  return li;
+  return aTag;
 }
 
-// Add markers for current restaurants to the map
+
+/************************************
+          ADD MARKER TO MAP
+************************************/
+
+
 addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
-    // Add marker to map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.newMap);
     marker.on('click', onClick);
     function onClick() {

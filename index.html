@@ -16,7 +16,7 @@
   <title>Restaurant Reviews</title>
 </head>
 
-<body>
+<body class="inside">
   <header>
     <nav>
       <!-- Setting tabindex to 1 ensures home link is tabbed first -->
@@ -41,7 +41,7 @@
           <option value="all">All Cuisines</option>
         </select>
       </div>
-      <ul id="restaurants-list"></ul>
+      <ul id="restaurants-list" role="tabpanel" name="listrest" aria-label="listrest" class="listRestaurants"></ul>
     </section>
   </main>
 
