@@ -109,7 +109,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
   const hours = document.getElementById('restaurant-hours');
   for (let key in operatingHours) {
     const row = document.createElement('tr');
-
+    
     const day = document.createElement('td');
     day.innerHTML = key;
     row.appendChild(day);
@@ -117,7 +117,6 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
     const time = document.createElement('td');
     time.innerHTML = operatingHours[key];
     row.appendChild(time);
-
     hours.appendChild(row);
   }
 }
@@ -161,36 +160,30 @@ createReviewHTML = review => {
 
   const date = document.createElement('p');
   date.innerHTML = review.date;
-  /*function todaysDate() {
-    var d = new Date();
-    var weekday = new Array(7);
-    weekday[0] = "Sunday";
-    weekday[1] = "Monday";
-    weekday[2] = "Tuesday";
-    weekday[3] = "Wednesday";
-    weekday[4] = "Thursday";
-    weekday[5] = "Friday";
-    weekday[6] = "Saturday";
-    var n = weekday[d.getDay()];
-    document.getElementById("demo").innerHTML = n;
-  }
-  $(document).ready(function () {
-    $("#restaurant-hours td:nth-child(3)").each(function () {
-      if (todaysDate == date) {
-        $(this).parent("tr").css("background-color", "red");
-      }
-    });
-  });*/
   li.appendChild(date);
 
+  const commentHeader = document.createElement('div');
+  commentHeader.id = 'comment-header';
+  commentHeader.appendChild(name);
+  commentHeader.appendChild(date);
+  li.appendChild(commentHeader);
+
+
   const rating = document.createElement('p');
+  rating.className = 'rating';
   rating.innerHTML = `Rating: ${review.rating}`;
   li.appendChild(rating);
 
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
   li.appendChild(comments);
-  li.setAttribute('tabindex', '0');
+  
+  const reviewRestaurant = document.createElement('div');
+  reviewRestaurant.className = 'review-comments';
+  commentHeader.setAttribute('tabindex', '3')
+  reviewRestaurant.appendChild(rating);
+  reviewRestaurant.appendChild(comments);
+  li.appendChild(reviewRestaurant);
 
   return li;
 }

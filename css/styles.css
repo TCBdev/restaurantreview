@@ -291,11 +291,12 @@ button:hover {
 }
 
 #reviews-list li {
-  background-color: #FFFFFF;
-  border: 2px solid #F3F3F3;
-  margin: 0 0 20px;
+  background-color: transparent;
+  border: 2px solid #4E4949;
+  box-shadow: 9px 9px 5px #a09e9ece;
+  margin: 20px;
   overflow: hidden;
-  padding: 35px;
+  padding: 0 0 20px;
   width: 80%;
 }
 
@@ -305,8 +306,38 @@ button:hover {
 
 #reviews-list li p {
   margin: 0 0 10px;
-  font-size: 1.35em;
+  font-size: 1.4em;
   word-wrap: break-word;
+}
+
+#comment-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #4E4949;
+  text-transform: uppercase;
+  font-size: 1.15em;
+}
+
+#comment-header p {
+  color: #FFFFFF;
+  padding: 1em 1em 0 1em;
+  justify-content: center;
+}
+
+.rating{
+  color: #E27617;
+  letter-spacing: 1px;
+  margin: 10px;
+  font-size: 1em;
+}
+
+.review-comments {
+  padding: 0 1em;
+  color: #4E4949;
+  letter-spacing: 1px;
+  margin: 10px;
+  font-size: 1em;
 }
 
 #restaurant-hours {
@@ -321,8 +352,7 @@ button:hover {
   color: #666666;
   font-size: 1.4em;
   line-height: 2;
-  border-collapse: collapse;
-  
+  border-collapse: collapse; 
 }
 
 tr:nth-child(even) {
@@ -451,7 +481,7 @@ tr:nth-child(odd) {
   }
 
   #restaurants-list p {
-    font-size: 1.1em;
+    font-size: 0.7em;
   }
 
   /* RESET IMAGE SIZE */
@@ -461,5 +491,9 @@ tr:nth-child(odd) {
 
   #restaurant-cuisine {
     width: 80%;
+  }
+
+  #restaurant-hours td {
+    font-size: 106%;
   }
 }
