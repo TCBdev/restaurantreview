@@ -2,7 +2,7 @@
 
 ### HOW TO RUN
 
-View the project here: [Restaurant Review App](https://tcdev.github.io/restaurantreview/)
+View the project here: [Restaurant Review App](https://tcbdev.github.io/restaurantreview/)
 
 To view this project locally:
 
